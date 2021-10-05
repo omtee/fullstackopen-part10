@@ -1,4 +1,4 @@
-export function nFormatter(num, digits) {
+function nFormatter(num, digits) {
   const lookup = [
     { value: 1, symbol: "" },
     { value: 1e3, symbol: "k" },
@@ -14,3 +14,5 @@ export function nFormatter(num, digits) {
   });
   return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
 }
+
+export default nFormatter;

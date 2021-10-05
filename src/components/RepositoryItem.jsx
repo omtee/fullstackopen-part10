@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import theme from '../theme';
 import Text from './Text';
-import { nFormatter } from '../utils';
+import nFormatter from '../utils/nFormatter';
 
 const styles = StyleSheet.create({
   mainContainer: {
