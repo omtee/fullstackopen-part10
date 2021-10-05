@@ -8,6 +8,7 @@ const theme = {
     appBarText: 'white',
     reposityItemBG: 'white',
     textTag: 'white',
+    error: '#d73a4a',
   },
   fontSizes: {
     body: 14,
