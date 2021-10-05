@@ -7,7 +7,7 @@ const theme = {
     appBarBG: '#24292e',
     appBarText: 'white',
     reposityItemBG: 'white',
-    tagText: 'white',
+    textTag: 'white',
   },
   fontSizes: {
     body: 14,

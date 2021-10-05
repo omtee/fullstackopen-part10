@@ -30,11 +30,11 @@ const styles = StyleSheet.create({
     padding: 6,
     borderRadius: 5,
     backgroundColor: theme.colors.primary,
-    color: theme.colors.tagText,
   },
   detailContainer: {
     flexDirection: 'column',
     alignItems: 'center',
+    paddingBottom: 10,
   }
 });
 
@@ -48,15 +48,12 @@ const RepositoryItemDetail = ({ number, text }) => (
 const RepositoryItem = ({ item }) => (
   <View style={styles.mainContainer}>
     <View style={styles.topContainer}>
-      <Image
-        style={styles.avatar}
-        source={item.ownerAvatarUrl}
-      />
+      <Image style={styles.avatar} source={item.ownerAvatarUrl} />
       <View style={styles.infoContainer}>
         <Text fontSize='heading' fontWeight='bold'>{item.fullName}</Text>
         <Text fontSize='subheading' color='textSecondary' style={{ flex: 1, flexShrink: 1 }}>{item.description}</Text>
         <View style={{ flexDirection: 'row' }}>
-          <View style={styles.tag}>{item.language}</View>
+          <View style={styles.tag}><Text color='tag'>{item.language}</Text></View>
           <View style={{ flexGrow: 1 }}></View>
         </View>
       </View>
