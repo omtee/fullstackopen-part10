@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 
 const RepositoryItemDetail = ({ number, text }) => (
   <View style={styles.detailContainer}>
-    <Text fontWeight='bold'>{nFormatter(number, 1)}</Text>
+    <Text fontWeight='bold' testID={`${text}Count`}>{nFormatter(number, 1)}</Text>
     <Text color='textSecondary'>{text}</Text>
   </View>
 );
@@ -48,12 +48,14 @@ const RepositoryItemDetail = ({ number, text }) => (
 const RepositoryItem = ({ item }) => (
   <View style={styles.mainContainer}>
     <View style={styles.topContainer}>
-      <Image style={styles.avatar} source={item.ownerAvatarUrl} />
+      <Image style={styles.avatar} source={{uri: item.ownerAvatarUrl }} />
       <View style={styles.infoContainer}>
-        <Text fontSize='heading' fontWeight='bold'>{item.fullName}</Text>
-        <Text fontSize='subheading' color='textSecondary' style={{ flex: 1, flexShrink: 1 }}>{item.description}</Text>
+        <Text fontSize='heading' fontWeight='bold' testID="fullName">{item.fullName}</Text>
+        <Text fontSize='subheading' color='textSecondary' style={{ flex: 1, flexShrink: 1 }} testID="description">
+          {item.description}
+        </Text>
         <View style={{ flexDirection: 'row' }}>
-          <View style={styles.tag}><Text color='tag'>{item.language}</Text></View>
+          <View style={styles.tag}><Text color='tag' testID="language">{item.language}</Text></View>
           <View style={{ flexGrow: 1 }}></View>
         </View>
       </View>
