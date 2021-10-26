@@ -1,10 +1,17 @@
-import React from 'react';
-import { FlatList, View, StyleSheet, Pressable } from 'react-native';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import { FlatList, View, StyleSheet, Pressable } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import useRepositories from '../hooks/useRepositories';
 import RepositoryItem from './RepositoryItem';
+import theme from '../theme';
 
 const styles = StyleSheet.create({
+  sortPicker: {
+    padding: 20,
+    borderWidth: 0,
+    backgroundColor: theme.colors.mainBG,
+  },
   separator: {
     height: 10,
   },
@@ -26,7 +33,6 @@ export const RepositoryListContainer = ({ repositories }) => {
     <Pressable onPress={() => handlePress(item.id)}>
       <RepositoryItem item={item} />
     </Pressable>
-    
   );
 
   return (
@@ -39,10 +45,52 @@ export const RepositoryListContainer = ({ repositories }) => {
   );
 };
 
-const RepositoryList = () => {
-  const { repositories } = useRepositories();
+const SortPicker = ({ selectedSort, setSort }) => (
+  <Picker style={styles.sortPicker} selectedValue={selectedSort} onValueChange={(itemValue) => setSort(itemValue)}>
+    <Picker.Item label="Latest repositories" value="latest" />
+    <Picker.Item label="Highest rated repositories" value="highest" />
+    <Picker.Item label="Lowest rated repositories" value="lowest" />
+  </Picker>
+);
 
-  return <RepositoryListContainer repositories={repositories} />;
+const queryVariables = (selectedSort) => {
+  let variables = {};
+  switch (selectedSort) {
+    case "latest":
+      variables = {
+        orderBy: "CREATED_AT",
+        orderDirection: "DESC",
+      };
+      break;
+    case "highest":
+      variables = {
+        orderBy: "RATING_AVERAGE",
+        orderDirection: "DESC",
+      };
+      break;
+    case "lowest":
+      variables = {
+        orderBy: "RATING_AVERAGE",
+        orderDirection: "ASC",
+      };
+      break;
+    default:
+      break;
+  }
+  return variables;
+};
+
+const RepositoryList = () => {
+  const [ selectedSort, setSort ] = useState("latest");
+  const variables = queryVariables(selectedSort);
+  const { repositories } = useRepositories(variables);
+
+  return (
+    <>
+      <SortPicker selectedSort={selectedSort} setSort={setSort} />
+      <RepositoryListContainer repositories={repositories} />
+    </>
+  );
 };
 
 export default RepositoryList;
