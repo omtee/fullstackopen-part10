@@ -88,7 +88,13 @@ const RepositoryItemView = () => {
       ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}
       keyExtractor={({ id }) => id}
-      ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
+      ListHeaderComponent={() => (
+        <View>
+          <RepositoryInfo repository={repository} />
+          {ItemSeparator()}
+        </View>
+        )
+      }
     />
   );
 };
