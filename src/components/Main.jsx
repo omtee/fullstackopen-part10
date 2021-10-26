@@ -9,6 +9,7 @@ import RepositoryItemView from './RepositoryItemView';
 import RepositoryList from './RepositoryList';
 import Review from './Review';
 import SignIn from './SignIn';
+import SignUp from './SignUp';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,8 +24,11 @@ const Main = () => {
     <View style={styles.container}>
       <AppBar />
       <Switch>
-      <Route path="/signin" exact>
+        <Route path="/signin" exact>
           <SignIn />
+        </Route>
+        <Route path="/signup" exact>
+          <SignUp />
         </Route>
         <Route path="/review" exact>
           <Review />

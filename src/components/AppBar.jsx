@@ -59,11 +59,18 @@ const AppBar = () => {
           </Pressable>
         </>
         :
-        <Pressable style={styles.link}>
-          <Link to="/signin">
-            <Text color='appBar'>Sign in</Text>
-          </Link>
-        </Pressable>
+        <>
+          <Pressable style={styles.link}>
+            <Link to="/signin">
+              <Text color='appBar'>Sign in</Text>
+            </Link>
+          </Pressable>
+          <Pressable style={styles.link}>
+            <Link to="/signup">
+              <Text color='appBar'>Sign up</Text>
+            </Link>
+          </Pressable>
+        </>
         }
       </ScrollView>
     </View>
