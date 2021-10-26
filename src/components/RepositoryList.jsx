@@ -91,7 +91,6 @@ const RepositoryList = () => {
   const [ searchKeyword ] = useDebounce(searchQuery, 500);
   const [ selectedSort, setSort ] = useState("latest");
   const variables = queryVariables(selectedSort, searchKeyword);
-  console.log('variables', variables);
   const { repositories } = useRepositories(variables);
 
   return (
