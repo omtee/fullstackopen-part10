@@ -22,34 +22,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export const RepositoryListContainer = ({ repositories }) => {
-  let history = useHistory();
-  // Get the nodes from the edges array
-  const repositoryNodes = repositories
-    ? repositories.edges.map(edge => edge.node)
-    : [];
-
-  const handlePress = (id) => {
-    history.push(`/view/${id}`);
-  };
-
-  const ItemSeparator = () => <View style={styles.separator} />;
-  const renderItem = ({ item }) => (
-    <Pressable onPress={() => handlePress(item.id)}>
-      <RepositoryItem item={item} />
-    </Pressable>
-  );
-
-  return (
-    <FlatList
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={renderItem}
-      keyExtractor={(item, index) => index.toString()}
-    />
-  );
-};
-
 const SearchBar =({ searchQuery, setSearchQuery }) => {
   const onChangeSearch = (query) => setSearchQuery(query);
   return (
@@ -86,6 +58,37 @@ const queryVariables = (selectedSort, searchKeyword) => {
   return { ...order(), searchKeyword };
 };
 
+export const RepositoryListContainer = ({ repositories, onEndReach }) => {
+  let history = useHistory();
+
+  // Get the nodes from the edges array
+  const repositoryNodes = repositories
+    ? repositories.edges.map(edge => edge.node)
+    : [];
+
+  const handlePress = (id) => {
+    history.push(`/view/${id}`);
+  };
+
+  const ItemSeparator = () => <View style={styles.separator} />;
+  const renderItem = ({ item }) => (
+    <Pressable onPress={() => handlePress(item.id)}>
+      <RepositoryItem item={item} />
+    </Pressable>
+  );
+
+  return (
+    <FlatList
+      data={repositoryNodes}
+      ItemSeparatorComponent={ItemSeparator}
+      renderItem={renderItem}
+      keyExtractor={({ id }) => id}
+      onEndReach={onEndReach}
+      onEndReachedThreshold={0.5}
+    />
+  );
+};
+
 const RepositoryList = () => {
   const [ searchQuery, setSearchQuery ] = useState('');
   const [ searchKeyword ] = useDebounce(searchQuery, 500);
@@ -93,11 +96,16 @@ const RepositoryList = () => {
   const variables = queryVariables(selectedSort, searchKeyword);
   const { repositories } = useRepositories(variables);
 
+  const onEndReach = () => {
+    console.log('You have reached the end of repository the list');
+    //fetchMore();
+  };
+
   return (
     <>
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <SortPicker selectedSort={selectedSort} setSort={setSort} />
-      <RepositoryListContainer repositories={repositories} />
+      <RepositoryListContainer repositories={repositories} onEndReach={onEndReach} />
     </>
   );
 };

@@ -67,7 +67,8 @@ const ReviewItem = ({ review }) => {
 
 const RepositoryItemView = () => {
   let { id } = useParams();
-  const { repository, loading } = useRepository(id);
+  const variables = { id, first: 2 };
+  const { repository, loading, fetchMore } = useRepository(variables);
 
   if (loading) {
     return (
@@ -78,6 +79,11 @@ const RepositoryItemView = () => {
   const reviewNodes = repository
     ? repository.reviews.edges.map(edge => edge.node)
     : [];
+
+  const onEndReach = () => {
+    console.log('You have reached the end of the review list');
+    fetchMore();
+  };
 
   const ItemSeparator = () => <View style={styles.separator} />;
   const renderItem = ({ item }) => <ReviewItem review={item} />;
@@ -95,6 +101,8 @@ const RepositoryItemView = () => {
         </View>
         )
       }
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.2}
     />
   );
 };
