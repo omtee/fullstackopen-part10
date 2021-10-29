@@ -7,7 +7,7 @@ import FormikTextInput from './FormikTextInput';
 
 import Text from './Text';
 import theme from '../theme';
-import useReview from '../hooks/useReview';
+import useCreateReview from '../hooks/useCreateReview';
 
 const initialValues = {
   ownerName: '',
@@ -73,9 +73,9 @@ export const ReviewContainer = ({ onSubmit }) => {
   );
 };
 
-const Review = () => {
+const CreateReview = () => {
   let history = useHistory();
-  const [review] = useReview();
+  const [review] = useCreateReview();
 
   const onSubmit = async (values) => {
     const { ownerName, repositoryName, rating, text } = values;
@@ -93,4 +93,4 @@ const Review = () => {
   return <ReviewContainer onSubmit={onSubmit} />;
 };
 
-export default Review;
+export default CreateReview;

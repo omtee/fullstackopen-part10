@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { FlatList, View, StyleSheet, Pressable } from 'react-native';
+import { FlatList, StyleSheet, Pressable } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import useRepositories from '../hooks/useRepositories';
 import RepositoryItem from './RepositoryItem';
 import theme from '../theme';
 import { Searchbar } from 'react-native-paper';
 import { useDebounce } from 'use-debounce/lib';
+import FlatlistItemSeparator from './FlatlistItemSeparator';
 
 const styles = StyleSheet.create({
   searchBar: {
@@ -16,9 +17,6 @@ const styles = StyleSheet.create({
     padding: 20,
     borderWidth: 0,
     backgroundColor: theme.colors.mainBG,
-  },
-  separator: {
-    height: 10,
   },
 });
 
@@ -66,11 +64,8 @@ export const RepositoryListContainer = ({ repositories, onEndReach }) => {
     ? repositories.edges.map(edge => edge.node)
     : [];
 
-  const handlePress = (id) => {
-    history.push(`/view/${id}`);
-  };
-
-  const ItemSeparator = () => <View style={styles.separator} />;
+  const ItemSeparator = () => <FlatlistItemSeparator />;
+  const handlePress = (id) => history.push(`/view/${id}`);
   const renderItem = ({ item }) => (
     <Pressable onPress={() => handlePress(item.id)}>
       <RepositoryItem item={item} />
@@ -97,7 +92,7 @@ const RepositoryList = () => {
   const { repositories } = useRepositories(variables);
 
   const onEndReach = () => {
-    console.log('You have reached the end of repository the list');
+    console.log('You have reached the end of repository the list'); // not triggering ??
     //fetchMore();
   };
 

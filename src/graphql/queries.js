@@ -90,10 +90,31 @@ export const SIGNIN = gql`
 `;
 
 export const AUTHORIZED_USER = gql`
-  query authorizedUser {
+  query authorizedUser($includeReviews: Boolean = false) {
     authorizedUser {
       id
       username
+      reviews @include(if: $includeReviews) {
+        totalCount
+        edges {
+          node {
+            id
+            repository {
+              id
+              fullName
+            }
+            text
+            rating
+            createdAt
+          }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
+        }
+      }
     }
   }
 `;
@@ -112,5 +133,11 @@ export const CREATE_REVIEW = gql`
     createReview(review: $review) {
       repositoryId
     }
+  }
+`;
+
+export const DELETE_REVIEW = gql`
+  mutation deleteReview($id: ID!) {
+    deleteReview(id: $id)
   }
 `;

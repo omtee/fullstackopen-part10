@@ -7,9 +7,10 @@ import theme from '../theme';
 import AppBar from './AppBar';
 import RepositoryItemView from './RepositoryItemView';
 import RepositoryList from './RepositoryList';
-import Review from './Review';
+import CreateReview from './CreateReview';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import UserReviews from './UserReviews';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,7 +32,10 @@ const Main = () => {
           <SignUp />
         </Route>
         <Route path="/review" exact>
-          <Review />
+          <CreateReview />
+        </Route>
+        <Route path="/userreviews" exact>
+          <UserReviews />
         </Route>
         <Route path="/view/:id">
           <RepositoryItemView />
